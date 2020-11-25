@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Task 4 ToDo</string>
+
+    <string-array name="tasks">
+        <item>task 1</item>
+        <item>task 2</item>
+        <item>task 3</item>
+        <item>task 4</item>
+        <item>task 5</item>
+    </string-array>
+
+    <string-array name="descriptions">
+        <item>description 1</item>
+        <item>description 2</item>
+        <item>description 3</item>
+        <item>description 4</item>
+        <item>description 5</item>
+    </string-array>
+</resources>
