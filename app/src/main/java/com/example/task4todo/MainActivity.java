@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements ToDoAdapter.itemC
         descriptions = new ArrayList<String>();
 
         String ts[] = getResources().getStringArray(R.array.tasks);
-        String ds[] = getResources().getStringArray(R.array.tasks);
+        String ds[] = getResources().getStringArray(R.array.descriptions);
 
         Collections.addAll(tasks, ts);
         Collections.addAll(descriptions, ds);
