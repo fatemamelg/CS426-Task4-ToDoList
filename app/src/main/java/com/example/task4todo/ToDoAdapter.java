@@ -60,6 +60,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.holder>  {
             this.listItemLongClick = listItemLongClick;
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -69,7 +70,8 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.holder>  {
 
         @Override
         public boolean onLongClick(View view) {
-            return false;
+            listItemLongClick.onListItemLongClick(getAdapterPosition());
+            return true;
         }
     }
 

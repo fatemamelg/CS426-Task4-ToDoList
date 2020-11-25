@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements ToDoAdapter.itemClickListener, ToDoAdapter.itemLongClickListener {
 
+    private static Context context;
+
     RecyclerView r1;
     String tasks[], descriptions[];
 
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements ToDoAdapter.itemC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MainActivity.context = getApplicationContext();
 
         r1 = (RecyclerView) findViewById(R.id.todoContainer);
 
@@ -43,10 +48,11 @@ public class MainActivity extends AppCompatActivity implements ToDoAdapter.itemC
     public void onListItemClick(int position) {
         Log.d(TAG, "onListItemClick: clicked at " + position);
 
+        //Context context1 = getApplicationContext();
         String t = tasks[position];
         String d = descriptions[position];
 
-        //Toast.makeText(ad.ctx, R.layout.activity_main, position, d);
+        //Toast.makeText(context1, R.layout.activity_main, position, d);
 
         Intent intent = new Intent(this, ToDoDetailsActivity.class);
         intent.putExtra("textView5", t);
@@ -57,10 +63,22 @@ public class MainActivity extends AppCompatActivity implements ToDoAdapter.itemC
     public void onListItemLongClick(int position) {
         Log.d(TAG, "onListItemLongClick: clicked at " + position);
 
-        //AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-        //alert.setTitle("Delete Item");
-        //alert.setMessage("Are you sure you want to delete this item?");
-        //alert.setNeutralButton("Delete", newD);
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+        alert.setIcon(android.R.drawable.ic_delete);
+        alert.setTitle("Delete Item");
+        alert.setMessage("Are you sure you want to delete this item?");
+        alert.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                tasks[position] = "-1";
+                descriptions[position] = "None";
+                ad.notifyDataSetChanged();
+            }
+        });
+
+        alert.setNegativeButton("No", null);
+
+        alert.show();
 
 
     }
