@@ -17,13 +17,15 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.holder>  {
     Context ctx;
 
     private itemClickListener mOnClickListener;
+    private itemLongClickListener mOnLongClickListener;
 
-    public ToDoAdapter(Context ct, String t[], String d[], itemClickListener mOnClickListener) {
+    public ToDoAdapter(Context ct, String t[], String d[], itemClickListener mOnClickListener, itemLongClickListener mOnLongClickListener) {
         ctx = ct;
         data1 = t;
         data2 = d;
 
         this.mOnClickListener = mOnClickListener;
+        this.mOnLongClickListener = mOnLongClickListener;
     }
 
     @NonNull
@@ -31,7 +33,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.holder>  {
     public holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater myInflater = LayoutInflater.from(ctx) ;
         View myView = myInflater.inflate(R.layout.my_row, parent, false);
-        return new holder(myView, mOnClickListener);
+        return new holder(myView, mOnClickListener, mOnLongClickListener);
     }
 
     @Override
@@ -45,15 +47,17 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.holder>  {
         return data1.length;
     }
 
-    public class holder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class holder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener  {
         TextView tv1, tv2;
         itemClickListener listItemClick;
+        itemLongClickListener listItemLongClick;
 
-        public holder (View itemView, itemClickListener listItemClick) {
+        public holder (View itemView, itemClickListener listItemClick, itemLongClickListener listItemLongClick) {
             super(itemView);
             tv1 = (TextView) itemView.findViewById(R.id.textView);
             tv2 = (TextView) itemView.findViewById(R.id.textView2);
             this.listItemClick = listItemClick;
+            this.listItemLongClick = listItemLongClick;
 
             itemView.setOnClickListener(this);
         }
@@ -62,10 +66,18 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.holder>  {
         public void onClick(View view) {
             listItemClick.onListItemClick(getAdapterPosition());
         }
+
+        @Override
+        public boolean onLongClick(View view) {
+            return false;
+        }
     }
 
     public interface itemClickListener{
-
         void onListItemClick(int position);
+    }
+
+    public interface itemLongClickListener{
+        void onListItemLongClick(int position);
     }
 }
