@@ -16,12 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class MainActivity extends AppCompatActivity implements ToDoAdapter.itemClickListener, ToDoAdapter.itemLongClickListener {
 
     private static Context context;
 
     RecyclerView r1;
-    String tasks[], descriptions[];
+    //String tasks[], descriptions[];
+    ArrayList<String> tasks;
+    ArrayList<String> descriptions;
 
     ToDoAdapter ad;
 
@@ -30,12 +35,18 @@ public class MainActivity extends AppCompatActivity implements ToDoAdapter.itemC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MainActivity.context = getApplicationContext();
+        // MainActivity.context = getApplicationContext();
 
         r1 = (RecyclerView) findViewById(R.id.todoContainer);
 
-        tasks = getResources().getStringArray(R.array.tasks);
-        descriptions = getResources().getStringArray(R.array.descriptions);
+        tasks =  new ArrayList<String>();
+        descriptions = new ArrayList<String>();
+
+        String ts[] = getResources().getStringArray(R.array.tasks);
+        String ds[] = getResources().getStringArray(R.array.tasks);
+
+        Collections.addAll(tasks, ts);
+        Collections.addAll(descriptions, ds);
 
         ad = new ToDoAdapter(this, tasks, descriptions, this, this);
 
@@ -49,8 +60,8 @@ public class MainActivity extends AppCompatActivity implements ToDoAdapter.itemC
         Log.d(TAG, "onListItemClick: clicked at " + position);
 
         //Context context1 = getApplicationContext();
-        String t = tasks[position];
-        String d = descriptions[position];
+        String t = tasks.get(position);
+        String d = descriptions.get(position);
 
         //Toast.makeText(context1, R.layout.activity_main, position, d);
 
@@ -70,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements ToDoAdapter.itemC
         alert.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                tasks[position] = "-1";
-                descriptions[position] = "None";
+                tasks.remove(position);
+                descriptions.remove(position);
                 ad.notifyDataSetChanged();
             }
         });

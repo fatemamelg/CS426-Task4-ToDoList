@@ -11,15 +11,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.holder>  {
 
-    String data1[], data2[];
+    ArrayList<String> data1, data2;
     Context ctx;
 
     private itemClickListener mOnClickListener;
     private itemLongClickListener mOnLongClickListener;
 
-    public ToDoAdapter(Context ct, String t[], String d[], itemClickListener mOnClickListener, itemLongClickListener mOnLongClickListener) {
+    public ToDoAdapter(Context ct, ArrayList<String> t, ArrayList<String> d, itemClickListener mOnClickListener, itemLongClickListener mOnLongClickListener) {
         ctx = ct;
         data1 = t;
         data2 = d;
@@ -38,13 +40,13 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.holder>  {
 
     @Override
     public void onBindViewHolder(@NonNull holder holder, int position) {
-        holder.tv1.setText(data1[position]);
-        holder.tv2.setText(data2[position]);
+        holder.tv1.setText(data1.get(position));
+        holder.tv2.setText(data2.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return data1.length;
+        return data1.size();
     }
 
     public class holder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener  {
